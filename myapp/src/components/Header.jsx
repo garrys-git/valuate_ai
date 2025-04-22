@@ -19,36 +19,36 @@ export default function Header() {
 
   return (
     <header className="bg-slate-200 shadow-md">
-      <div style={{ backgroundColor: "#afbbee" }} className="flex justify-between items-center px-4 py-2">
+      <div style={{ backgroundColor: "#020d3b" }} className="flex justify-between items-center px-4 py-2">
         {/* Logo and Brand Name aligned left */}
         <a href="/" className="flex items-center gap-2">
           <img
-            src="/images/undraw_investing_kncz.svg"
+            src="/images/logo4.png"
             alt="logo"
             className="h-7 sm:h-10 w-auto"
           />
           <h1 className="font-bold text-lg sm:text-2xl flex items-center">
-            <span className="text-slate-500">Valuate</span>
-            <span className="text-slate-700">AI</span>
+            <span className="text-slate-200">valuate.</span>
+            <span className="text-slate-400">ai</span>
           </h1>
         </a>
 
         {/* Nav Links */}
         <ul className="flex gap-6 items-center relative" ref={dropdownRef}>
           <a href="/">
-            <li className="hidden sm:inline text-slate-700 hover:underline hover:text-slate-900 transition">
+            <li className="hidden sm:inline text-slate-400 font-bold hover:underline hover:text-slate-900 transition">
               Home
             </li>
           </a>
 
           <a href="/about">
-            <li className="hidden sm:inline text-slate-700 hover:underline hover:text-slate-900 transition">
+            <li className="hidden sm:inline text-slate-400 font-bold hover:underline hover:text-slate-900 transition">
               About
             </li>
           </a>
 
           <li
-            className="hidden sm:flex items-center gap-1 text-slate-700 hover:underline hover:text-slate-900 cursor-pointer transition"
+            className="hidden sm:flex items-center gap-1 text-slate-400 font-bold hover:underline hover:text-slate-900 cursor-pointer transition"
             onClick={() => setShowDropdown((prev) => !prev)}
           >
             Tools

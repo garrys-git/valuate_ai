@@ -37,14 +37,14 @@ export default function Home() {
   }, [market]);
 
   return (
-    <div className="flex flex-col gap-0 px-0 py-0">
+    <div style={{ backgroundColor: "#020d3b" }} className="flex flex-col gap-0 px-0 py-0">
       <div className="bg-cover bg-center py-16 px-4"
         style={{ backgroundImage: "url('/images/home-hero.jpg')" }}
       >
         {/* Header */}
         <h1 className="text-slate-600 font-bold text-3xl lg:text-6xl text-center">
-          Simplify your <span className="text-slate-400">Finances, </span>
-          <br /> Amplify your Future
+        <span className="text-slate-400">Simplify</span> your Finances,
+          <br /> <span className="text-slate-400">Amplify</span> your Future
         </h1>
 
         <p className="text-slate-200 text-sm sm:text-base max-w-2xl text-center mx-auto py-4">
