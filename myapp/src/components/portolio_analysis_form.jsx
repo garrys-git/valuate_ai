@@ -56,7 +56,7 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
   });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-slate-200 px-8 py-4">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-4xl font-bold">🧮 Portfolio Analyzer</h1>

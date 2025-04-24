@@ -109,7 +109,7 @@ export default function PortolioAnalysisPage() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-0">
       <PortfolioAnalysisForm onSubmit={handlePortfolioAnalysisSubmit} result={analysisResult} />
     </div>
   );

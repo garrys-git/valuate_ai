@@ -69,7 +69,7 @@ export default function DcfCalculatorPage() {
   };  
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-slate-200 px-8 py-4">
       <div className="max-w-6xl mx-auto space-y-10">
         {/* Header */}
         <div className="text-center">
@@ -233,7 +233,7 @@ export default function DcfCalculatorPage() {
           </form>
 
           {/* Quick Info Panel */}
-          <div className="bg-white shadow-lg p-6 rounded-2xl">
+          <div className="bg-white shadow-lg p-6 rounded-2xl h-fit">
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-1">
               <Info className="w-4 h-4" /> Quick Tips
             </h3>
@@ -254,7 +254,7 @@ export default function DcfCalculatorPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
-            className="bg-white rounded-2xl shadow-lg p-6 max-w-4xl mx-auto space-y-6"
+            className="bg-white rounded-2xl shadow-lg p-6 space-y-6"
             >
             <div className="text-center">
                 <h3 className="text-xl font-semibold mb-2">📊 Valuation Summary</h3>
@@ -300,16 +300,9 @@ export default function DcfCalculatorPage() {
             {result?.charts && (
                 <div>
                     <h4 className="text-lg font-semibold">📈 Enhanced Visuals</h4>
-                    <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                        {/* {<DcfChartsLayout charts={result.charts} />} */}
-                        {/* <div className="py-6"> */}
-                            {/* <DcfChartsLayout charts={result.charts} /> */}
-                        {/* </div> */}
-
-
+                    <div className="grid md:grid-cols-1 gap-4 text-sm text-gray-700 items-center">
                         {result?.charts?.fcf_projection && (
                             <ChartContainer chartData={result.charts.fcf_projection} />
-
                         )}
 
                         {result?.charts?.dcf_vs_price && (

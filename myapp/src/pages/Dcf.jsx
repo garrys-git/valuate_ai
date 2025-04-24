@@ -77,7 +77,7 @@ export default function DcfPage() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-0 m-0">
       <DcfForm onSubmit={handleDcfSubmit} />
     </div>
   );
