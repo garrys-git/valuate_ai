@@ -4,15 +4,39 @@ import Home from "./pages/Home";
 import DCF from "./pages/Dcf";
 import Screener from "./pages/Screener";
 import TradingIndicators from "./pages/Indicators";
+import ProtectedRoute from "./components/protected_route";
+import Login from "./components/login";
+import Signup from "./components/signup";
+
 function App() {
   return (
     <Router>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dcf" element={<DCF />} />
-        <Route path="/screener" element={<Screener />} />
-        <Route path="/indicators" element={<TradingIndicators />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dcf" 
+          element={
+            <ProtectedRoute>
+              <DCF />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/screener" 
+          element={
+            <ProtectedRoute>
+              <Screener />
+            </ProtectedRoute>
+        } 
+        />
+        <Route path="/indicators" 
+          element={
+            <ProtectedRoute>
+              <TradingIndicators />
+            </ProtectedRoute>
+        } 
+        />
       </Routes>
     </Router>
   );
