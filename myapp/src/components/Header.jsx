@@ -36,19 +36,19 @@ export default function Header() {
         {/* Nav Links */}
         <ul className="flex gap-6 items-center relative" ref={dropdownRef}>
           <a href="/">
-            <li className="hidden sm:inline text-slate-400 font-bold hover:underline hover:text-slate-900 transition">
+            <li className="hidden sm:inline text-slate-400 font-bold hover:underline hover:text-slate-100 transition">
               Home
             </li>
           </a>
 
           <a href="/about">
-            <li className="hidden sm:inline text-slate-400 font-bold hover:underline hover:text-slate-900 transition">
+            <li className="hidden sm:inline text-slate-400 font-bold hover:underline hover:text-slate-100 transition">
               About
             </li>
           </a>
 
           <li
-            className="hidden sm:flex items-center gap-1 text-slate-400 font-bold hover:underline hover:text-slate-900 cursor-pointer transition"
+            className="hidden sm:flex items-center gap-1 text-slate-400 font-bold hover:underline hover:text-slate-400 cursor-pointer transition"
             onClick={() => setShowDropdown((prev) => !prev)}
           >
             Tools
@@ -58,7 +58,7 @@ export default function Header() {
                 <a href="/DCF">
                   <li className="px-4 py-2 hover:bg-slate-100 transition">DCF Analyzer</li>
                 </a>
-                <a href="/compare">
+                <a href="/indicators">
                   <li className="px-4 py-2 hover:bg-slate-100 transition">Trading Indicators</li>
                 </a>
                 <a href="/screener">

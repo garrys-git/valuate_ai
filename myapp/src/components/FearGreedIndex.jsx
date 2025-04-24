@@ -45,7 +45,7 @@ const FearGreedGauge = ({ score, level }) => {
 
 export default function FearGreedIndex() {
   const [data, setData] = useState(null);
-  const [market, setMarket] = useState("US");
+  const [market, setMarket] = useState("INDIA");
   const [loading, setLoading] = useState(false);
 
   const fetchIndex = async () => {
@@ -72,17 +72,17 @@ export default function FearGreedIndex() {
   if (loading || !data) return <div className="text-center py-10">Loading data...</div>;
 
   return (
-    <div className="py-0 px-6 flex flex-col items-center gap-8">
-      <h2 className="text-3xl font-bold text-slate-800">Fear & Greed Index</h2>
+    <div className="py-6 px-6 flex flex-col items-center gap-8">
+      <h2 className="text-3xl font-bold text-slate-400">Fear & Greed Index</h2>
       <button
         onClick={toggleMarket}
-        className="px-4 py-2 bg-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-300"
+        className="px-4 py-2 bg-slate-400 rounded-lg text-sm text-slate-700 hover:bg-slate-300"
       >
         Toggle Market ({market})
       </button>
       <div className="flex flex-col lg:flex-row items-center justify-center gap-30 mt-8">
         <div className="flex flex-col items-center">
-          <div className="text-2xl font-bold text-slate-700 mb-2">
+          <div className="text-2xl font-bold text-slate-400 mb-2">
             Score: {data.score} ({data.level})
           </div>
           <FearGreedGauge score={data.score} level={data.level} />

@@ -59,9 +59,11 @@ export default function Home() {
               Try DCF Analysis Tool
             </button>
           </Link>
+          <Link to="/indicators">
             <button className="bg-slate-600 text-slate-200 py-2 px-4 rounded-lg hover:bg-slate-400">
               Use Advanced Trading Indicators
             </button>
+          </Link>
           <Link to="/screener">
             <button className="bg-slate-600 text-slate-200 py-2 px-4 rounded-lg hover:bg-slate-400">
               Conduct a Portfolio Risk Analysis
@@ -76,7 +78,7 @@ export default function Home() {
         </div>
 
         {/* Feature Sections */}
-        <div className="w-full flex flex-col mt-16">
+        <div className="px-4 w-full flex flex-col mt-16">
           {/* DCF Analysis */}
           <div className="flex flex-col md:flex-row w-full">
             <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center py-3 px-3">
