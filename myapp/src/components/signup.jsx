@@ -3,7 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth_context";
 
 export default function Signup() {
-  const [form, setForm] = useState({ username: "", password: "", full_name: "" });
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+    full_name: "",
+    country: "",
+    investment_experience: "",
+    investment_goal: "",
+  });
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -21,7 +28,6 @@ export default function Signup() {
     });
 
     if (res.ok) {
-      // ✅ Auto-login after successful signup
       const loginRes = await fetch("http://localhost:8000/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -33,8 +39,8 @@ export default function Signup() {
 
       if (loginRes.ok) {
         const data = await loginRes.json();
-        login(data.access_token); // ✅ Save token in context
-        navigate("/"); // ✅ Redirect to home
+        login(data.access_token);
+        navigate("/");
       } else {
         alert("Signup succeeded, but auto-login failed. Please log in manually.");
         navigate("/login");
@@ -74,11 +80,36 @@ export default function Signup() {
             className="w-full p-2 border rounded"
             required
           />
+          <input
+            name="country"
+            placeholder="Country"
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <select
+            name="investment_experience"
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          >
+            <option value="">Investment Experience</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+          <input
+            name="investment_goal"
+            placeholder="Your Investment Goal"
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
           <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
             Sign Up
           </button>
         </form>
-        <p>
+        <p className="text-sm mt-4">
           Already signed up?{" "}
           <a href="/login" className="text-slate-600 underline hover:cursor-pointer">
             Log In
