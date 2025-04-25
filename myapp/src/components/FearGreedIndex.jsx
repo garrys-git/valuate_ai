@@ -50,16 +50,43 @@ export default function FearGreedIndex() {
 
   const fetchIndex = async () => {
     setLoading(true);
+  
+    const cacheKey = `fear_greed_${market}`;
+    const cached = localStorage.getItem(cacheKey);
+  
+    if (cached) {
+      console.log("Using cached data:", cached);
+      const parsed = JSON.parse(cached);
+      const isToday = parsed.date === new Date().toISOString().slice(0, 10);
+  
+      if (isToday) {
+        setData(parsed.data);
+        setLoading(false);
+        return;
+      }
+    }
+  
     try {
+      console.log("Fetching new data...");
       const res = await fetch(`http://localhost:8000/api/fear_greed?market=${market}`);
       const json = await res.json();
+  
+      // Save to cache with today's date
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          date: new Date().toISOString().slice(0, 10),
+          data: json,
+        })
+      );
+  
       setData(json);
     } catch (err) {
       console.error("Failed to fetch index:", err);
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   useEffect(() => {
     fetchIndex();
@@ -69,7 +96,7 @@ export default function FearGreedIndex() {
     setMarket((prev) => (prev === "US" ? "INDIA" : "US"));
   };
 
-  if (loading || !data) return <div className="text-center py-10">Loading data...</div>;
+  if (loading || !data) return <div className="text-center text-slate-200 py-10">Loading data...</div>;
 
   return (
     <div className="py-6 px-6 flex flex-col items-center gap-8">
