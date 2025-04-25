@@ -3,8 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Info, TrendingUp, PercentCircle, DollarSign, BarChart3 } from "lucide-react";
 // import DcfChartsLayout from "../components/dcf_charts_layout";
 import ChartContainer from "../components/dcf_charts_container";
+import { useAuth } from "../components/auth_context";
 
 export default function DcfCalculatorPage() {
+  const { auth } = useAuth();
+
   const [formData, setFormData] = useState({
     market: "US",
     ticker: "",
@@ -48,16 +51,11 @@ export default function DcfCalculatorPage() {
       });
   
       const data = await response.json();
-  
-    //   setResult({
-    //     ticker: formData.ticker,
-    //     value: data.report.estimated_value || "$123.45",
-    //     status: data.report.valuation_status || "Undervalued", // fallback if backend doesn't return these
-    //   });
-        setResult({
-            ticker: formData.ticker,
-            ...data.report,
-        });      
+
+      setResult({
+          ticker: formData.ticker,
+          ...data.report,
+      });      
     } catch (error) {
       console.error("Error fetching DCF report:", error);
       setResult({
@@ -108,12 +106,19 @@ export default function DcfCalculatorPage() {
               />
             </div>
 
-            {/* Premium Toggle */}
+            {/* Premium Toggle (User-controlled, but gated) */}
             <div className="flex items-center justify-between">
-              <label className="font-medium">Premium User</label>
+              <label className="font-medium">Use Premium Features</label>
               <button
                 type="button"
-                onClick={() => handleChange("isPremium", !formData.isPremium)}
+                onClick={() => {
+                  if (!auth.isPremium && !formData.isPremium) {
+                    alert("You must be a premium member to access premium features.");
+                    window.location.href = "/buypremium"; // redirect
+                  } else {
+                    handleChange("isPremium", !formData.isPremium);
+                  }
+                }}
                 className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
                   formData.isPremium ? "bg-green-500" : "bg-gray-300"
                 }`}
@@ -167,7 +172,7 @@ export default function DcfCalculatorPage() {
             )}
 
             {/* Scenario if ML is ON */}
-            {formData.isPremium && formData.useML && (
+            {auth.isPremium && formData.useML && (
               <div>
                 <label className="block mb-1 font-medium">Scenario</label>
                 <select

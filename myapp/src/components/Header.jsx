@@ -91,6 +91,9 @@ export default function Header() {
               {openDropdown === "profile" && (
                 <ul className="absolute top-full right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10 overflow-hidden">
                   <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Your Profile</li>
+                  <a href="/buypremium">
+                    <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Buy Premium</li>
+                  </a>
                   <li
                     onClick={handleLogout}
                     className="px-4 py-2 hover:bg-red-100 text-red-600 cursor-pointer"

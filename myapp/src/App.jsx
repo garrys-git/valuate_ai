@@ -7,6 +7,7 @@ import TradingIndicators from "./pages/Indicators";
 import ProtectedRoute from "./components/protected_route";
 import Login from "./components/login";
 import Signup from "./components/signup";
+import BuyPremium from "./pages/BuyPremium";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/buypremium" element={<BuyPremium />} />
         <Route path="/dcf" 
           element={
             <ProtectedRoute>

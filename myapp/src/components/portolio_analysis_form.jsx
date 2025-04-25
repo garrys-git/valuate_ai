@@ -6,10 +6,12 @@ import VolatilityChart from "./VolatilityChart";
 import BetaChart from "./BetaChart";
 import CorrelationHeatmap from "./CorrelationHeatmap";
 import CumulativeReturnsChart from "./CumulativeReturnsChart";
+import { useAuth } from "../components/auth_context";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 export default function PortfolioAnalysisForm({ onSubmit, result }) {
+  const { auth } = useAuth();
   const [market, setMarket] = useState("US");
   const [isPremium, setIsPremium] = useState(false);
   const [useManualEntry, setUseManualEntry] = useState(false);
@@ -82,10 +84,17 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="font-medium">Premium User</label>
+            <label className="font-medium">Use Premium Features</label>
             <button
               type="button"
-              onClick={() => setIsPremium(!isPremium)}
+              onClick={() => {
+                if (!auth.isPremium && !isPremium) {
+                  alert("You must be a premium member to access premium features.");
+                  window.location.href = "/buypremium";
+                } else {
+                  setIsPremium(!isPremium);
+                }
+              }}
               className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
                 isPremium ? "bg-green-500" : "bg-gray-300"
               }`}

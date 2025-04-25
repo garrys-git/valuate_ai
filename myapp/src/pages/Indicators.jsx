@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Slideshow from "../components/slideshow";
+import { useAuth } from "../components/auth_context";
 
 const indicators = [
   {
@@ -59,6 +61,9 @@ const indicators = [
 ];
 
 export default function TradingIndicators() {
+  const navigate = useNavigate();
+  const { auth } = useAuth();
+  const isPremiumUser = auth.isPremium;
   const [showPremium, setShowPremium] = useState(false);
 
   return (
@@ -88,7 +93,13 @@ export default function TradingIndicators() {
               type="checkbox"
               className="sr-only peer"
               checked={showPremium}
-              onChange={() => setShowPremium((prev) => !prev)}
+              onChange={() => {
+                if (!isPremiumUser && !showPremium) {
+                  navigate("/buypremium");
+                  return;
+                }
+                setShowPremium((prev) => !prev);
+              }}
             />
             <div className="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-blue-600"></div>
             <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-all peer-checked:translate-x-full"></div>
