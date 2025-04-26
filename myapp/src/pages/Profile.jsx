@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuthFetch } from "../components/auth_context";
+import { useAuth, useAuthFetch } from "../components/auth_context";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
@@ -8,7 +8,10 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const { authLoading } = useAuth(); // <-- Import authLoading!
+
   useEffect(() => {
+    if (authLoading) return; // <-- Don't fetch if still loading auth
     const fetchProfile = async () => {
       try {
         const res = await authFetch("http://localhost:8000/api/me");
@@ -24,7 +27,8 @@ export default function Profile() {
       }
     };
     fetchProfile();
-  }, [authFetch]);
+  }, [authLoading]); // <-- Now correctly depends on authLoading
+  
 
   if (loading) {
     return (
@@ -51,6 +55,11 @@ export default function Profile() {
           <div className="flex justify-between">
             <span className="text-gray-500 font-medium">Username/Email:</span>
             <span className="text-gray-900">{userInfo.username}</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-500 font-medium">Phone:</span>
+            <span className="text-gray-900">{userInfo.phone}</span>
           </div>
 
           <div className="flex justify-between">

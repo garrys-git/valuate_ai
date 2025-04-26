@@ -1,21 +1,40 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
-export const useAuthFetch = () => {
-  const { auth } = useAuth();
+export function useAuthFetch() {
+  const { auth, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { token } = auth || {};
+
   return async (url, options = {}) => {
-    return await fetch(url, {
+    if (!token) {
+      console.warn("No auth token. Redirecting to login...");
+      logout();
+      navigate("/login");
+      throw new Error("Unauthorized");
+    }
+
+    const res = await fetch(url, {
       ...options,
       headers: {
-        ...(options.headers || {}),
+        ...options.headers,
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
+
+    if (res.status === 403) {
+      console.warn("Token expired or invalid. Logging out...");
+      logout();
+      navigate("/login");
+      throw new Error("Unauthorized");
+    }
+
+    return res;
   };
-};
+}
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({ token: null, isPremium: false });

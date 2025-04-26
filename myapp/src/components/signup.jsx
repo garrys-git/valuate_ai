@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth_context";
 
 export default function Signup() {
+  const [emailError, setEmailError] = useState("");
   const [form, setForm] = useState({
     username: "",
     password: "",
     full_name: "",
+    phone: "",
     country: "",
     investment_experience: "",
     investment_goal: "",
@@ -20,6 +22,14 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    setEmailError("");
+    // Simple email regex validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.username)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
 
     const res = await fetch("http://localhost:8000/api/user/signup", {
       method: "POST",
@@ -72,10 +82,19 @@ export default function Signup() {
             className="w-full p-2 border rounded"
             required
           />
+          {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           <input
             name="password"
             type="password"
             placeholder="Password"
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+          <input
+            name="phone"
+            type="Phone"
+            placeholder="Phone No. (with country code)"
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
@@ -103,7 +122,6 @@ export default function Signup() {
             placeholder="Your Investment Goal"
             onChange={handleChange}
             className="w-full p-2 border rounded"
-            required
           />
           <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
             Sign Up

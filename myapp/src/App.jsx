@@ -9,6 +9,7 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import BuyPremium from "./pages/BuyPremium";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/buypremium" element={<BuyPremium />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
         <Route path="/dcf" 
           element={
             <ProtectedRoute>
