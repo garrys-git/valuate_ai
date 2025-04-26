@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "./auth_context";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown, UserCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -59,15 +60,15 @@ export default function Header() {
             <ChevronDown className="h-4 w-4" />
             {openDropdown === "tools" && (
               <ul className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-10 overflow-hidden">
-                <a href="/DCF">
+                <Link to="/DCF">
                   <li className="px-4 py-2 hover:bg-slate-100 transition">DCF Analyzer</li>
-                </a>
-                <a href="/indicators">
+                </Link>
+                <Link to="/indicators">
                   <li className="px-4 py-2 hover:bg-slate-100 transition">Trading Indicators</li>
-                </a>
-                <a href="/screener">
+                </Link>
+                <Link to="/screener">
                   <li className="px-4 py-2 hover:bg-slate-100 transition">Portfolio Risk Analyzer</li>
-                </a>
+                </Link>
               </ul>
             )}
           </li>
@@ -90,7 +91,9 @@ export default function Header() {
               </button>
               {openDropdown === "profile" && (
                 <ul className="absolute top-full right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10 overflow-hidden">
-                  <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Your Profile</li>
+                  <a href="/profile">
+                    <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Your Profile</li>
+                  </a>
                   <a href="/buypremium">
                     <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Buy Premium</li>
                   </a>

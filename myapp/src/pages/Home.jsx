@@ -54,7 +54,7 @@ export default function Home() {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mt-6">
-          <Link to="/DCF">
+          <Link to="/dcf">
             <button className="bg-slate-600 text-slate-200 py-2 px-4 rounded-lg hover:bg-slate-400">
               Try DCF Analysis Tool
             </button>

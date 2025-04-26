@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/protected_route";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import BuyPremium from "./pages/BuyPremium";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/buypremium" element={<BuyPremium />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/dcf" 
           element={
             <ProtectedRoute>
