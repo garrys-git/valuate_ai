@@ -10,6 +10,7 @@ import Signup from "./components/signup";
 import BuyPremium from "./pages/BuyPremium";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         } 
         />
       </Routes>
+      <Footer />
     </Router>
   );
 }

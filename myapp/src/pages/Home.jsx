@@ -37,8 +37,8 @@ export default function Home() {
   }, [market]);
 
   return (
-    <div style={{ backgroundColor: "#020d3b" }} className="flex flex-col gap-0 px-0 py-0">
-      <div className="bg-cover bg-center py-16 px-4"
+    <div style={{ backgroundColor: "#020d3b" }} className="flex flex-col gap-0 px-2 py-1">
+      <div className="bg-cover bg-center py-16 px-4 rounded-4xl"
         style={{ backgroundImage: "url('/images/home-hero.jpg')" }}
       >
         {/* Header */}
@@ -48,7 +48,7 @@ export default function Home() {
         </h1>
 
         <p className="text-slate-200 text-sm sm:text-base max-w-2xl text-center mx-auto py-4">
-          ValuateAI is an AI-powered platform to help you make smarter decisions in personal finance and investments.
+          <a href="https://x.com/valuate_ai"><span className="text-slate-400 text-bold">valuate.ai </span></a> is an AI-powered platform to help you make smarter decisions in personal finance and investments.
           Whether trading, analyzing portfolios, or exploring investment opportunities, we provide intelligent tools to support your journey.
         </p>
 
@@ -81,10 +81,10 @@ export default function Home() {
         <div className="px-4 w-full flex flex-col mt-16">
           {/* DCF Analysis */}
           <div className="flex flex-col md:flex-row w-full">
-            <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center py-3 px-3">
+            <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center py-3 px-3 rounded-tl-2xl rounded-bl-2xl">
               <Slideshow images={["/images/undraw_finance_m6vw.svg", "/images/undraw_projections_fhch.svg"]} />
             </div>
-            <div className="bg-cover w-full md:w-2/3 bg-white p-6 flex flex-col justify-center"
+            <div className="bg-cover w-full md:w-2/3 bg-white p-6 flex flex-col justify-center rounded-tr-2xl rounded-br-2xl"
               style={{ backgroundImage: "url('/images/home-pic-2.jpg')" }}>
               <h2 className="text-2xl font-bold text-slate-200 mb-2">Discounted Cashflow Analysis</h2>
               <p className="text-gray-300 text-base leading-relaxed">
@@ -97,10 +97,10 @@ export default function Home() {
 
           {/* Portfolio Risk Analysis */}
           <div className="flex flex-col md:flex-row w-full mt-8">
-            <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center">
+            <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center rounded-tl-2xl rounded-bl-2xl">
               <Slideshow images={["/images/undraw_stock-prices_16kd.svg", "/images/undraw_crypto-portfolio_cat6.svg"]} />
             </div>
-            <div className="bg-cover w-full md:w-2/3 bg-white p-6 flex flex-col justify-center"
+            <div className="bg-cover w-full md:w-2/3 bg-white p-6 flex flex-col justify-center rounded-tr-2xl rounded-br-2xl"
               style={{ backgroundImage: "url('/images/home-pic-2.jpg')" }}>
               <h2 className="text-2xl font-bold text-slate-200 mb-2">Portfolio Risk Analysis</h2>
               <p className="text-gray-300 text-base leading-relaxed">
@@ -112,10 +112,10 @@ export default function Home() {
 
           {/* Trading Indicators */}
           <div className="flex flex-col md:flex-row w-full mt-8">
-            <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center">
+            <div className="w-full md:w-1/3 h-64 bg-gray-100 flex items-center justify-center rounded-tl-2xl rounded-bl-2xl">
               <Slideshow images={["/images/undraw_bear-market_dhi3.svg", "/images/undraw_organizing-data_uns9.svg"]} />
             </div>
-            <div className="bg-cover w-full md:w-2/3 bg-white p-6 flex flex-col justify-center"
+            <div className="bg-cover w-full md:w-2/3 bg-white p-6 flex flex-col justify-center rounded-tr-2xl rounded-br-2xl"
               style={{ backgroundImage: "url('/images/home-pic-2.jpg')" }}>
               <h2 className="text-2xl font-bold text-slate-200 mb-2">Trading Indicators</h2>
               <p className="text-gray-300 text-base leading-relaxed">
