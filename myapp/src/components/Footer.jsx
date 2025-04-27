@@ -22,7 +22,7 @@ export default function Footer() {
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">
             <FaLinkedin />
           </a>
-          <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+          <a href="https://medium.com/@harman_30" target="_blank" rel="noopener noreferrer" className="hover:text-white">
             <FaMedium />
           </a>
         </div>

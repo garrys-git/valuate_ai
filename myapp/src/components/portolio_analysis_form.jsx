@@ -7,6 +7,7 @@ import BetaChart from "./BetaChart";
 import CorrelationHeatmap from "./CorrelationHeatmap";
 import CumulativeReturnsChart from "./CumulativeReturnsChart";
 import { useAuth } from "../components/auth_context";
+import PnLBarChart from "./PnLBarChart";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -171,10 +172,16 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
           )}
 
           {!useManualEntry && (
-            <div>
-              <label className="block mb-1 font-medium flex items-center gap-1">
-                <Upload className="w-4 h-4" /> Upload CSV
-              </label>
+            <div className="relative group">
+              <label className="font-medium flex items-center gap-1">
+                <div className="relative group">
+                  <Upload className="w-4 h-4" />
+                  <div className="absolute right-full top-1/2 mr-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-[5px] transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-2 py-1 w-56 text-center z-10">
+                    We support various formats. If there is any failure to generate your report then it is recommended to upload a file with Zerodha's portfolio report format, i.e. with columns as follows; Instrument, Qty., Avg. cost, LTP (Optional).
+                  </div>
+                </div>
+                Upload CSV
+            </label>
               <input
                 type="file"
                 accept=".csv"
@@ -197,7 +204,7 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
             <li><strong>Quantity:</strong> Number of shares owned</li>
             <li><strong>Avg Price:</strong> Your average buy price</li>
             <li><strong>LTP:</strong> Current price (optional)</li>
-            <li><strong>CSV Upload:</strong> Format: Ticker, Quantity, AvgPrice, LTP</li>
+            <li><strong>CSV Upload:</strong> Recommended Format: Instrument, Qty., Avg. cost, LTP (Optional)</li>
           </ul>
           <p className="text-xs text-gray-500">Premium users unlock advanced analytics like volatility, beta, and correlation. Data is never stored.</p>
         </div>
@@ -222,7 +229,7 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
                   <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
                 </div>
               </p>
-              <p className="font-semibold text-blue-600">₹ {Math.round(result.report.total_investment)}</p>
+              <p className="font-semibold text-blue-600">{market === "India" ? "₹" : "$"} {Math.round(result.report.total_investment)}</p>
             </div>
             <div className="bg-white p-4 rounded-xl shadow-md">
               <p className="text-sm text-gray-600">Concentration Risk
@@ -309,6 +316,20 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
             </div>
           </div>
 
+            {/* PnL Allocation Chart */}
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="font-semibold text-lg mb-4">Profit & Loss
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This chart displays the Profit & Loss of your investments. Size of each section is relative to the absolute P&L as displayed in the table besides it.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </h3>
+              <PnLBarChart tickerPnL={result.report.ticker_pnl} market={market}/>
+            </div>
+
           {/* Premium Metrics Section */}
           {result.metrics && (
             <div className="space-y-8 mt-8">
@@ -333,7 +354,7 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
                     {/* Info Icon with Tooltip */}
                     <div className="relative group inline-block">
                       <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
-                        This score measures how diversified your portfolio is across various assets and sectors. A higher score indicates better diversification. Ranges from 0 to 1.
+                        This score (Herfindahl Index) measures how diversified your portfolio is across various assets and sectors. A higher score indicates better diversification. Ranges from 0 to 1.
                       </span>
                       <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
                     </div>
