@@ -35,7 +35,6 @@ export default function CumulativeReturnsChart({ portfolioReturns, benchmarkRetu
 
   return (
     <div className="mt-8">
-      <h2 className="text-lg font-semibold mb-4">Cumulative Returns</h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={cumulativeData}>
           <XAxis dataKey="day" />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BarChart3, Upload, Plus, Trash2 } from "lucide-react";
+import { BarChart3, KeyRound, Upload, Plus, Type, Trash2 } from "lucide-react";
 import { Bar, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from "chart.js";
 import VolatilityChart from "./VolatilityChart";
@@ -12,7 +12,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
 export default function PortfolioAnalysisForm({ onSubmit, result }) {
   const { auth } = useAuth();
-  const [market, setMarket] = useState("US");
+  const [market, setMarket] = useState("India");
   const [isPremium, setIsPremium] = useState(false);
   const [useManualEntry, setUseManualEntry] = useState(false);
   const [manualEntries, setManualEntries] = useState([
@@ -58,7 +58,8 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
   });
 
   return (
-    <div className="space-y-8 bg-slate-200 px-8 py-4">
+    
+    <div className="min-h-screen space-y-12 bg-gradient-to-b from-slate-200 to-slate-500 px-8 py-8">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-4xl font-bold">🧮 Portfolio Analyzer</h1>
@@ -66,25 +67,39 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
       </div>
 
       {/* Form + Info Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
         {/* Form (2/3) */}
         <form onSubmit={handleSubmit} className="bg-white shadow-lg p-6 rounded-2xl space-y-6 md:col-span-2">
-          <div>
+          <div className="relative group">
             <label className="block mb-1 font-medium flex items-center gap-1">
-              <BarChart3 className="w-4 h-4" /> Select Market
+              <div className="relative group">
+                <BarChart3 className="w-4 h-4 text-slate-600 cursor-pointer" />
+                <div className="absolute right-full top-1/2 mr-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-[5px] transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-2 py-1 w-56 text-center z-10">
+                    Select the market you want to analyze, like US stocks or Indian stocks.
+                </div>
+              </div>
+              Select Market
             </label>
             <select
               value={market}
               onChange={(e) => setMarket(e.target.value)}
               className="w-full border px-3 py-2 rounded-lg"
             >
-              <option value="US">US</option>
               <option value="India">India</option>
+              <option value="US">US</option>
             </select>
           </div>
 
-          <div className="flex items-center justify-between">
-            <label className="font-medium">Use Premium Features</label>
+          <div className="flex items-center justify-between relative group">
+              <label className="font-medium flex items-center gap-1">
+                <div className="relative group">
+                  <KeyRound className="w-4 h-4 text-slate-600 cursor-pointer" />
+                  <div className="absolute right-full top-1/2 mr-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-[5px] transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-2 py-1 w-56 text-center z-10">
+                    Unlock premium risk analysis metrics like volatility & beta along with advanced chart features. Premium membership required.
+                  </div>
+                </div>
+                Use Premium Features
+              </label>
             <button
               type="button"
               onClick={() => {
@@ -107,8 +122,16 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
             </button>
           </div>
 
-          <div className="flex items-center justify-between">
-            <label className="font-medium">Manual Entry</label>
+          <div className="flex items-center justify-between relative group">
+            <label className="font-medium flex items-center gap-1">
+                <div className="relative group">
+                  <Type className="w-4 h-4 text-slate-600 cursor-pointer" />
+                  <div className="absolute right-full top-1/2 mr-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-[5px] transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-2 py-1 w-56 text-center z-10">
+                    Manually enter your portfolio data. Last Traded Price is optional. Make sure to enter correct Tickers.
+                  </div>
+                </div>
+                Manual Entry
+            </label>
             <button
               type="button"
               onClick={() => setUseManualEntry(!useManualEntry)}
@@ -182,89 +205,217 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
 
       {/* Display Results */}
       {result && (
-        <div className="bg-white shadow p-6 rounded-2xl space-y-6">
-          <h2 className="text-xl font-semibold">📊 Portfolio Analysis Report</h2>
+        <div className="bg-white shadow-lg p-8 rounded-2xl space-y-8">
+
+          {/* Portfolio Analysis Header */}
+          <h2 className="text-2xl font-semibold text-center text-blue-700">📊 Portfolio Analysis Report</h2>
 
           {/* Quick Panel */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-gray-50 p-4 rounded-lg">
-            <div>
-              <p className="text-sm text-gray-500">Total Investment</p>
-              <p className="font-semibold text-blue-600">₹ {result.report.total_investment}</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center bg-gray-50 p-6 rounded-xl shadow-md">
+            <div className="bg-white p-4 rounded-xl shadow-md">
+              <p className="text-sm text-gray-600">Total Investment
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This is the total amount you have invested in your portfolio. Higher investment amounts could signify greater portfolio risk or diversification.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </p>
+              <p className="font-semibold text-blue-600">₹ {Math.round(result.report.total_investment)}</p>
             </div>
-            <div>
-              <p className="text-sm text-gray-500">Concentration Risk</p>
+            <div className="bg-white p-4 rounded-xl shadow-md">
+              <p className="text-sm text-gray-600">Concentration Risk
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This measures how much of your portfolio is invested in a single asset or sector. A high concentration risk means you're more exposed to individual asset performance.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </p>
               <p className="font-semibold text-blue-600">{result.report.concentration_risk}</p>
             </div>
-            <div>
-              <p className="text-sm text-gray-500">Benchmark %</p>
+            <div className="bg-white p-4 rounded-xl shadow-md">
+              <p className="text-sm text-gray-600">Benchmark %
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This percentage represents the allocation of your portfolio compared to a benchmark, such as the NIFTY 50 or S&P 500. A higher percentage shows alignment with the benchmark.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </p>
               <p className="font-semibold text-blue-600">{result.report.benchmark_allocation_percent}%</p>
             </div>
-            <div>
-              <p className="text-sm text-gray-500">Overlap Count</p>
+            <div className="bg-white p-4 rounded-xl shadow-md">
+              <p className="text-sm text-gray-600">Overlap Count
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    The number of assets in your portfolio that overlap with your benchmark. A higher count means your portfolio has greater alignment with the benchmark.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </p>
               <p className="font-semibold text-blue-600">{result.report.benchmark_overlap.length}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div>
-              <h3 className="font-medium">Benchmark Overlap</h3>
-              <ul className="list-disc ml-5">
+          {/* Charts Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+            {/* Sector Allocation Chart */}
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="font-semibold text-lg mb-4">Sector Allocation
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This chart shows how your portfolio is distributed across various sectors. A diversified sector allocation can reduce risk.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </h3>
+              <Pie data={pieData(Object.keys(result.report.sector_allocation), Object.values(result.report.sector_allocation))} />
+            </div>
+
+            {/* Benchmark Overlap */}
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="font-semibold text-lg mb-4">Benchmark Overlap
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This shows the assets in your portfolio that overlap with your chosen benchmark. The higher the overlap, the more similar your portfolio is to the benchmark.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </h3>
+              <ul className="list-disc ml-5 text-gray-700 text-sm">
                 {result.report.benchmark_overlap.map((t, i) => <li key={i}>{t}</li>)}
               </ul>
             </div>
-            <div>
-              <h3 className="font-medium">Sector Allocation</h3>
-              <Pie data={pieData(Object.keys(result.report.sector_allocation), Object.values(result.report.sector_allocation))} />
-            </div>
-            <div>
-              <h3 className="font-medium">Ticker Allocation</h3>
+
+            {/* Ticker Allocation Chart */}
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="font-semibold text-lg mb-4">Ticker Allocation
+                {/* Info Icon with Tooltip */}
+                <div className="relative group inline-block">
+                  <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                    This chart displays the allocation of your portfolio across individual stocks (tickers). A more evenly spread allocation can help reduce risk.
+                  </span>
+                  <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                </div>
+              </h3>
               <Bar data={barData(Object.keys(result.report.ticker_allocation), Object.values(result.report.ticker_allocation))} />
             </div>
           </div>
 
-          {/* Premium metrics */}
+          {/* Premium Metrics Section */}
           {result.metrics && (
-            <div className="space-y-4 mt-8">
-              <h2 className="text-xl font-semibold">🔒 Premium Metrics</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700">
-                <div className="bg-gray-50 p-4 rounded-xl">
-                  <p className="text-gray-500">Portfolio Volatility</p>
-                  <p className="font-semibold">{result.metrics.portfolio_volatility}</p>
+            <div className="space-y-8 mt-8">
+              <h2 className="text-2xl font-semibold text-center text-blue-700">🔒 Premium Metrics</h2>
+
+              {/* Premium Metrics Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-700">
+                <div className="bg-gray-50 p-6 rounded-xl shadow-lg">
+                  <p className="text-gray-600">Portfolio Volatility
+                    {/* Info Icon with Tooltip */}
+                    <div className="relative group inline-block">
+                      <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        This metric shows the degree of variation in your portfolio’s returns over time. Higher volatility indicates higher potential risk.
+                      </span>
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                    </div>
+                  </p>
+                  <p className="font-semibold text-blue-600">{result.metrics.portfolio_volatility}</p>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-xl">
-                  <p className="text-gray-500">Diversification Score</p>
-                  <p className="font-semibold">{result.metrics.diversification_score}</p>
+                <div className="bg-gray-50 p-6 rounded-xl shadow-lg">
+                  <p className="text-gray-600">Diversification Score
+                    {/* Info Icon with Tooltip */}
+                    <div className="relative group inline-block">
+                      <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        This score measures how diversified your portfolio is across various assets and sectors. A higher score indicates better diversification. Ranges from 0 to 1.
+                      </span>
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                    </div>
+                  </p>
+                  <p className="font-semibold text-blue-600">{result.metrics.diversification_score}</p>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-xl">
-                  <p className="text-gray-500">Score</p>
-                  <p className="font-semibold">{result.metrics.score}</p>
+                <div className="bg-gray-50 p-6 rounded-xl shadow-lg">
+                  <p className="text-gray-600">Score
+                    {/* Info Icon with Tooltip */}
+                    <div className="relative group inline-block">
+                      <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        This score, calculated according using our personal formula, summarizes the overall health of your portfolio based on factors like risk, returns, and diversification. A higher score is typically better.
+                      </span>
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                    </div>
+                  </p>
+                  <p className="font-semibold text-blue-600">{result.metrics.score}</p>
                 </div>
               </div>
-
-              <div>
-                <h3 className="font-medium">Tips</h3>
-                {result.metrics.tips.length > 0 ? (
-                  <ul className="list-disc ml-6 text-sm text-gray-700">
-                    {result.metrics.tips.map((tip, idx) => (
-                      <li key={idx}>{tip}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="ml-1 text-sm text-green-600">🎉 Bravo! Your portfolio is well optimized!</p>
-                )}
-              </div>
-
+              {/* Premium Charts Section */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                <VolatilityChart
-                  portfolioVol={result.metrics.portfolio_volatility}
-                  benchmarkReturns={result.metrics.benchmark_returns}
-                />
-                <BetaChart betas={result.metrics.beta} />
-                <CorrelationHeatmap matrix={result.metrics.correlation_matrix} />
-                <CumulativeReturnsChart
-                  portfolioReturns={result.metrics.portfolio_returns}
-                  benchmarkReturns={result.metrics.benchmark_returns}
-                />
+                {/* Volatility Chart */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h5 className="text-md font-semibold">Portfolio Volatility</h5>
+                    <div className="relative group">
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                      <div className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        This metric shows the degree of variation in your portfolio’s returns over time. Higher volatility indicates higher potential risk.
+                      </div>
+                    </div>
+                  </div>
+                  <VolatilityChart
+                    portfolioVol={result.metrics.portfolio_volatility}
+                    benchmarkReturns={result.metrics.benchmark_returns}
+                  />
+                </div>
+
+                {/* Beta Chart */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h5 className="text-md font-semibold">Portfolio Beta</h5>
+                    <div className="relative group">
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                      <div className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        Portfolio Beta indicates how sensitive your portfolio is to market movements. A higher Beta suggests greater risk relative to the market.
+                      </div>
+                    </div>
+                  </div>
+                  <BetaChart betas={result.metrics.beta} />
+                </div>
+
+                {/* Correlation Heatmap */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h5 className="text-md font-semibold">Correlation Heatmap</h5>
+                    <div className="relative group">
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                      <div className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        Visualizes the correlation between different assets in your portfolio. Positive values indicate assets move together, while negative values show inverse relationships.
+                      </div>
+                    </div>
+                  </div>
+                  <CorrelationHeatmap matrix={result.metrics.correlation_matrix} />
+                </div>
+
+                {/* Cumulative Returns Chart */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h5 className="text-md font-semibold">Cumulative Returns</h5>
+                    <div className="relative group">
+                      <span className="w-4 h-4 text-slate-600 cursor-pointer">ℹ️</span>
+                      <div className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 opacity-0 group-hover:opacity-100 transform transition-all duration-300 bg-gray-800 text-white text-xs rounded-md px-3 py-2 w-64 text-left z-10">
+                        Shows the total returns of the portfolio compared to a benchmark over time. Indicates the overall growth and performance of the portfolio.
+                      </div>
+                    </div>
+                  </div>
+                  <CumulativeReturnsChart
+                    portfolioReturns={result.metrics.portfolio_returns}
+                    benchmarkReturns={result.metrics.benchmark_returns}
+                  />
+                </div>
               </div>
             </div>
           )}

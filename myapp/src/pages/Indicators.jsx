@@ -67,7 +67,7 @@ export default function TradingIndicators() {
   const [showPremium, setShowPremium] = useState(false);
 
   return (
-    <div className="bg-slate-300 min-h-screen py-16 px-4">
+    <div className="bg-gradient-to-b from-slate-200 to-slate-500 min-h-screen py-16 px-4">
       {/* Page Header */}
       <div className="max-w-4xl mx-auto text-center mb-12">
         <h1 className="text-4xl font-bold text-slate-800 mb-4">Trading Indicators</h1>
@@ -139,6 +139,20 @@ export default function TradingIndicators() {
               </a>
             </div>
           ))}
+      </div>
+      {/* Explanation and Disclaimer Section */}
+      <div className="bg-gradient-to-b from-slate-200 to-slate-500 p-6 rounded-xl shadow-md mt-12 text-center mx-4 sm:mx-auto max-w-6xl">
+        <h3 className="text-2xl font-bold text-slate-800 mb-4">About the Indicators</h3>
+        <p className="text-slate-800 mb-4">
+          Our indicators are crafted using the most advanced technical analysis tools. These algorithms help traders identify market opportunities with greater precision and speed. We integrate traditional strategies like Golden Cross, RSI Divergence, and MACD, alongside cutting-edge tools such as Supertrend and Ichimoku Cloud. Each indicator is designed to provide clear signals for market trends, entry points, and potential reversals.
+        </p>
+        <p className="text-slate-800 mb-4">
+          <span className="font-bold">Why Our Indicators Are Better:<br></br></span>
+            <span className="text-slate-800">AI-enhanced insights for accurate predictions.<br></br> Proven strategies used by professional traders worldwide.<br></br> Seamless integration with popular platforms like TradingView.<br></br></span>
+        </p>
+        <p className="text-sm text-slate-800 mt-6">
+          <span className="text-red-700 underline">Disclaimer:</span> Trading involves risk and is not suitable for every investor. Our indicators are designed to assist in decision-making but do not guarantee profits. Always trade responsibly and consult with a financial advisor.
+        </p>
       </div>
     </div>
   );

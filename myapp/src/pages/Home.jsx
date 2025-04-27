@@ -37,7 +37,7 @@ export default function Home() {
   }, [market]);
 
   return (
-    <div style={{ backgroundColor: "#020d3b" }} className="flex flex-col gap-0 px-2 py-1">
+    <div style={{ backgroundColor: "#020d3b" }} className="flex flex-col gap-0 px-4 py-1">
       <div className="bg-cover bg-center py-16 px-4 rounded-4xl"
         style={{ backgroundImage: "url('/images/home-hero.jpg')" }}
       >
