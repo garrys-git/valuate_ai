@@ -69,7 +69,7 @@ export default function BuyPremium() {
 
   if (alreadyPremium) {
     return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center text-center px-4">
+      <div className="min-h-screen bg-gradient-to-b from-slate-200 to-slate-500 flex items-center justify-center text-center px-4">
         <div className="bg-white rounded-xl shadow-lg p-8 max-w-xl">
           <h2 className="text-3xl font-bold text-green-600 mb-4">You're already Premium 🎉</h2>
           <p className="text-gray-700 text-lg">
@@ -82,9 +82,9 @@ export default function BuyPremium() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-300 py-6 px-4 flex flex-col items-center">
-      <h2 className="text-4xl font-bold text-slate-900 mb-4">Upgrade to Premium</h2>
-      <p className="text-lg text-slate-600 mb-5 text-center max-w-2xl">
+    <div className="min-h-screen bg-gradient-to-b from-slate-200 to-slate-500 py-6 px-4 flex flex-col items-center">
+      <h2 className="text-4xl font-bold text-slate-900 mb-4">Upgrade to Premium ✨</h2>
+      <p className="text-lg text-slate-700 mb-5 text-center max-w-2xl">
         Unlock full access to all premium indicators, trading tools, and advanced features — all for just <strong>₹499</strong>.
       </p>
 
@@ -93,7 +93,7 @@ export default function BuyPremium() {
         {/* Free Membership */}
         <div className="border rounded-xl p-6 flex flex-col">
           <h3 className="text-2xl font-semibold mb-4 text-slate-700 text-center">Free Membership</h3>
-          <ul className="flex-1 space-y-3 text-gray-600">
+          <ul className="flex-1 space-y-3 text-slate-700">
             <li>✅ Access to limited free indicators</li>
             <li>✅ Basic trading tools</li>
             <li>✅ Community support</li>

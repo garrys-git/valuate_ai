@@ -62,9 +62,9 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-300">
-      <img src="/images/signup.svg" className="w-full max-w-sm mb-1" />
-      <div className="max-w-sm mx-auto p-6 bg-white shadow rounded-2xl">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-slate-200 to-slate-500">
+      <img src="/images/signup.svg" className="w-full max-w-[300px] mb-2 mt-1" />
+      <div className="max-w-sm mb-12 mx-auto p-6 bg-white shadow rounded-2xl">
         <h2 className="text-xl font-bold mb-4">Sign Up</h2>
         <form onSubmit={handleSignup} className="space-y-4">
           <input

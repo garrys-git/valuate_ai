@@ -8,10 +8,10 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { authLoading } = useAuth(); // <-- Import authLoading!
+  const { authLoading } = useAuth();
 
   useEffect(() => {
-    if (authLoading) return; // <-- Don't fetch if still loading auth
+    if (authLoading) return;
     const fetchProfile = async () => {
       try {
         const res = await authFetch("http://localhost:8000/api/me");
@@ -27,53 +27,54 @@ export default function Profile() {
       }
     };
     fetchProfile();
-  }, [authLoading]); // <-- Now correctly depends on authLoading
-  
+  }, [authLoading]);
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg text-gray-600">Loading profile...</div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-slate-300">
+        <div className="text-xl text-gray-500 animate-pulse">Loading your profile...</div>
       </div>
     );
   }
 
   if (!userInfo) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg text-red-600">Failed to load profile.</div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-slate-300">
+        <div className="text-xl text-red-500">Failed to load your profile.</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-300 flex flex-col items-center justify-center p-6">
-      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-slate-800 mb-6">Your Profile</h2>
+    <div className="min-h-screen bg-gradient-to-b from-slate-200 to-slate-500 flex flex-col items-center justify-center p-6">
+      <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl p-10 w-full max-w-md transform transition hover:scale-[1.02]">
+        <h2 className="text-4xl font-extrabold text-center text-blue-900 mb-8 tracking-tight">
+          Welcome! 👋
+        </h2>
 
-        <div className="space-y-4">
-          <div className="flex justify-between">
-            <span className="text-gray-500 font-medium">Username/Email:</span>
-            <span className="text-gray-900">{userInfo.username}</span>
+        <div className="space-y-6">
+          <div className="flex justify-between items-center border-b pb-3">
+            <span className="text-gray-600 font-semibold">Email</span>
+            <span className="text-gray-800">{userInfo.username}</span>
           </div>
 
-          <div className="flex justify-between">
-            <span className="text-gray-500 font-medium">Phone:</span>
-            <span className="text-gray-900">{userInfo.phone}</span>
+          <div className="flex justify-between items-center border-b pb-3">
+            <span className="text-gray-600 font-semibold">Phone</span>
+            <span className="text-gray-800">{userInfo.phone || "Not Provided"}</span>
           </div>
 
-          <div className="flex justify-between">
-            <span className="text-gray-500 font-medium">Premium Status:</span>
-            <span className={userInfo.is_premium ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
+          <div className="flex justify-between items-center border-b pb-3">
+            <span className="text-gray-600 font-semibold">Membership</span>
+            <span className={userInfo.is_premium ? "text-green-600 font-bold" : "text-red-600 font-bold"}>
               {userInfo.is_premium ? "Premium Member" : "Free Member"}
             </span>
           </div>
 
           {userInfo.is_premium && userInfo.premium_expiry && (
-            <div className="flex justify-between">
-              <span className="text-gray-500 font-medium">Premium Expires:</span>
-              <span className="text-blue-600 font-semibold">
-                {new Date(userInfo.premium_expiry).toLocaleString()}
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600 font-semibold">Premium Expires</span>
+              <span className="text-blue-700 font-bold">
+                {new Date(userInfo.premium_expiry).toLocaleDateString()}
               </span>
             </div>
           )}
@@ -81,7 +82,7 @@ export default function Profile() {
 
         <button
           onClick={() => navigate("/")}
-          className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-200"
+          className="mt-10 w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-bold py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
         >
           Go to Home
         </button>

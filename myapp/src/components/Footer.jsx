@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaXTwitter, FaLinkedin, FaMedium } from 'react-icons/fa6';
 
 export default function Footer() {
   return (
@@ -17,13 +17,13 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex space-x-6 text-2xl">
           <a href="https://x.com/valuate_ai" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-            <FaTwitter />
+            <FaXTwitter />
           </a>
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">
             <FaLinkedin />
           </a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-            <FaGithub />
+          <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <FaMedium />
           </a>
         </div>
 

@@ -36,8 +36,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-300">
-        <img src="/images/login.svg" className="w-full max-w-sm"/>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-slate-200 to-slate-500">
+        <img src="/images/login.svg" className="w-full max-w-[300px]"/>
         <div className="max-w-sm mx-auto p-6 bg-white shadow rounded-2xl">
         <h2 className="text-xl font-bold mb-4">Log In</h2>
         <form onSubmit={handleLogin} className="space-y-4">

@@ -31,7 +31,7 @@ export default function Header() {
       <div style={{ backgroundColor: "#020d3b" }} className="flex justify-between items-center px-4 py-2">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
-          <img src="/images/logo4.png" alt="logo" className="h-7 sm:h-10 w-auto" />
+          <img src="/images/header-logo.png" alt="logo" className="h-7 sm:h-10 w-auto" />
           <h1 className="font-bold text-lg sm:text-2xl flex items-center">
             <span className="text-slate-200">valuate.</span>
             <span className="text-slate-400">ai</span>
@@ -61,13 +61,13 @@ export default function Header() {
             {openDropdown === "tools" && (
               <ul className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-10 overflow-hidden">
                 <Link to="/DCF">
-                  <li className="px-4 py-2 hover:bg-slate-100 transition">DCF Analyzer</li>
+                  <li className="px-4 py-2 text-slate-500 hover:bg-slate-300 transition">DCF Analyzer</li>
                 </Link>
                 <Link to="/indicators">
-                  <li className="px-4 py-2 hover:bg-slate-100 transition">Trading Indicators</li>
+                  <li className="px-4 py-2 text-slate-500 hover:bg-slate-300 transition">Trading Indicators</li>
                 </Link>
                 <Link to="/screener">
-                  <li className="px-4 py-2 hover:bg-slate-100 transition">Portfolio Risk Analyzer</li>
+                  <li className="px-4 py-2 text-slate-500 hover:bg-slate-300 transition">Portfolio Risk Analyzer</li>
                 </Link>
               </ul>
             )}
@@ -88,6 +88,7 @@ export default function Header() {
                 className="rounded-full h-9 w-9 bg-slate-300"
               >
                 {/* Avatar icon or image */}
+                <img src="/images/header-profile.png"></img>
               </button>
               {openDropdown === "profile" && (
                 <ul className="absolute top-full right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10 overflow-hidden">

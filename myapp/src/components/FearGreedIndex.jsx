@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
-// const COLORS = ["#10eb1a", "#ebe110", "#eb1010"];
 const COLORS = ["#133dea", "#6680eb", "#afbbee"];
 const LEVEL_COLORS = {
   "Extreme Fear": "#eb1010",
@@ -13,32 +13,50 @@ const LEVEL_COLORS = {
 
 const FearGreedGauge = ({ score, level }) => {
   const degree = (score / 100) * 180;
+  const angleRad = (Math.PI * degree) / 180;
+  
   return (
-    <div className="relative w-64 h-32">
-      <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 200 110">
+    <div className="relative w-64 h-40 flex items-center justify-center">
+      <svg viewBox="0 0 200 100" className="w-full h-full">
+        {/* Background full arc */}
         <path
           d="M10,100 A90,90 0 0,1 190,100"
           fill="none"
           stroke="#e5e7eb"
-          strokeWidth="20"
+          strokeWidth="15"
+          strokeLinecap="round"
         />
+
+        {/* Colored progress arc */}
         <path
           d="M10,100 A90,90 0 0,1 190,100"
           fill="none"
           stroke={LEVEL_COLORS[level] || "#6b7280"}
-          strokeWidth="20"
-          strokeDasharray={`${(score / 100) * 282.6}, 282.6`}
+          strokeWidth="15"
+          strokeLinecap="round"
+          strokeDasharray={`${(score / 100) * 283}, 283`}
         />
-        <circle cx="100" cy="100" r="6" fill="#000" />
+
+        {/* Center dot */}
+        <circle cx="100" cy="100" r="5" fill="#000" />
+
+        {/* Needle */}
         <line
           x1="100"
           y1="100"
-          x2={100 + 75 * Math.cos((Math.PI * (180 - degree)) / 180)}
-          y2={100 - 75 * Math.sin((Math.PI * degree) / 180)}
+          x2={100 + 70 * Math.cos(Math.PI - angleRad)}
+          y2={100 - 70 * Math.sin(angleRad)}
           stroke="#000"
-          strokeWidth="4"
+          strokeWidth="3"
+          strokeLinecap="round"
         />
       </svg>
+
+      {/* Centered Score and Level */}
+      <div className="absolute top-16 text-center">
+        <div className="text-3xl font-bold text-slate-400">{score}</div>
+        <div className="text-sm text-slate-400">{level}</div>
+      </div>
     </div>
   );
 };
@@ -100,20 +118,57 @@ export default function FearGreedIndex() {
 
   return (
     <div className="py-6 px-6 flex flex-col items-center gap-8">
-      <h2 className="text-3xl font-bold text-slate-400">Fear & Greed Index</h2>
-      <button
+      <div className="flex items-center gap-2">
+        <h2 className="text-3xl font-bold text-slate-400">Fear & Greed Index</h2>
+
+        {/* Info Icon with Tooltip */}
+        <div className="relative group">
+          <InformationCircleIcon className="w-6 h-6 text-slate-400 cursor-pointer" />
+          <div className="absolute left-full top-0 ml-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-[-5px] transition-all duration-300 bg-gray-800 text-white text-sm rounded-md px-3 py-2 w-64 text-center z-10">
+            Fear & Greed Index measures the market sentiment.<br/>Our version uses Reddit, news headlines, volatility index (VIX), and a deep sentiment model ensemble to compute it.
+          </div>
+        </div>
+      </div>
+
+      {/* <button
         onClick={toggleMarket}
         className="px-4 py-2 bg-slate-400 rounded-lg text-sm text-slate-700 hover:bg-slate-300"
       >
         Toggle Market ({market})
-      </button>
+      </button> */}
+
+        <div className="flex items-center justify-center mt-6 space-x-3">
+          <span className="text-sm text-gray-600">INDIA</span>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              onChange={ toggleMarket }
+            />
+            <div className="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-blue-600"></div>
+            <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-all peer-checked:translate-x-full"></div>
+          </label>
+          <span className="text-sm text-gray-600">US</span>
+        </div>
+
       <div className="flex flex-col lg:flex-row items-center justify-center gap-30 mt-8">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center relative group">
           <div className="text-2xl font-bold text-slate-400 mb-2">
             Score: {data.score} ({data.level})
           </div>
           <FearGreedGauge score={data.score} level={data.level} />
+          {/* Tooltip on Gauge Hover */}
+          <div className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-[5px] transition-all duration-300 bg-gray-800 text-white text-sm rounded-md px-3 py-2 w-72 text-center z-10">
+            {data.level} indicates how emotional the market is. <br/>
+            Levels:<br/>
+            • 0–20: Extreme Fear<br/>
+            • 21–40: Fear<br/>
+            • 41–60: Neutral<br/>
+            • 61–80: Greed<br/>
+            • 81–100: Extreme Greed
+          </div>
         </div>
+
         <div className="w-[300px] h-[200px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

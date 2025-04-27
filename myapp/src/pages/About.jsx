@@ -2,29 +2,29 @@ import React from 'react';
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-slate-300 flex flex-col items-center justify-start p-8">
-      <div className="max-w-4xl w-full bg-white shadow-2xl rounded-3xl overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-slate-200 to-slate-500 flex flex-col items-center justify-start p-8">
+      <div className="max-w-4xl w-full bg-slate-200 shadow-2xl rounded-3xl overflow-hidden">
         
         {/* Hero Section with Text Over Image */}
-        <div className="relative w-full h-76 rounded-3xl overflow-hidden shadow-2xl mb-3">
+        <div className="relative w-full h-76 rounded-3xl overflow-hidden shadow-2xl">
             {/* Background Image */}
             <img
                 src="/images/dcf-main-light.jpg"
                 alt="About Valuate.AI"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover opacity-90"
             />
             
             {/* Overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent flex flex-col items-center justify-center text-center p-8">
-            <h1 className="text-4xl font-extrabold text-white mb-16">About Us</h1>
-            <p className="text-lg text-gray-200">
+            <h1 className="text-4xl font-extrabold text-white mb-20">About Us</h1>
+            <p className="text-lg text-slate-100">
                 Empowering investors with cutting-edge AI tools for smarter financial decisions. <br />
-                As we say, <span className="italic font-semibold text-slate-400">Simplify your Finances, Amplify your Future.</span>
+                As we say, <span className="italic font-semibold text-slate-300">Simplify your Finances, Amplify your Future.</span>
             </p>
             </div>
         </div>  
-        <div className="p-10">
-          <div className="space-y-6 text-gray-700 text-md leading-relaxed">
+        <div className="p-10 bg-slate-200">
+          <div className="space-y-6 text-slate-700 text-md leading-relaxed">
             <p>
               At <a href="/"><span className="font-semibold text-blue-600">valuate.ai</span></a>, we combine advanced
               artificial intelligence with sleek design to bring you accurate, real-time asset valuations and
@@ -57,7 +57,7 @@ export default function About() {
 
             <div className="relative z-10 flex flex-col items-center justify-center py-12 px-4">
                 <p className="text-2xl font-bold text-slate-500 text-center mb-10">
-                Your portfolio. Your future. <span className="text-2xl font-bold text-slate-700">Valuated</span>
+                Your portfolio. Your future. <span className="text-2xl font-bold text-slate-800">Valuated</span>
                 </p>
 
                 <a
