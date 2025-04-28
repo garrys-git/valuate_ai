@@ -148,7 +148,7 @@ export default function TradingIndicators() {
         </p>
         <p className="text-slate-800 mb-4">
           <span className="font-bold">Why Our Indicators Are Better:<br></br></span>
-            <span className="text-slate-800">AI-enhanced insights for accurate predictions.<br></br> Proven strategies used by professional traders worldwide.<br></br> Seamless integration with popular platforms like TradingView.<br></br></span>
+            <span className="text-slate-800">AI-enhanced insights for accurate predictions.<br></br> Proven strategies used by professional traders worldwide.<br></br> Seamless integration with popular platforms like TradingView.<br></br> Customizable inputs to suit your personal trading style.<br></br> Enhanced configurable visuals and plots to help you balance between minimalism and pro-visualization.<br></br></span>
         </p>
         <p className="text-sm text-slate-800 mt-6">
           <span className="text-red-700 underline">Disclaimer:</span> Trading involves risk and is not suitable for every investor. Our indicators are designed to assist in decision-making but do not guarantee profits. Always trade responsibly and consult with a financial advisor.
