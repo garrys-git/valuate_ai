@@ -14,6 +14,7 @@ export default function Profile() {
     if (authLoading) return;
     const fetchProfile = async () => {
       try {
+        console.log("Fetching user info for profile.");
         const res = await authFetch("http://localhost:8000/api/me");
         if (!res.ok) {
           throw new Error("Failed to fetch user data");

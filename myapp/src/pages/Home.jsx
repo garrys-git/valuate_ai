@@ -1,40 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import FearGreedIndex from "../components/FearGreedIndex";
 import Slideshow from "../components/slideshow";
 
-const COLORS = ["#0088FE", "#FFBB28", "#FF8042"];
-const LEVEL_COLORS = {
-  "Extreme Fear": "#dc2626",
-  "Fear": "#f97316",
-  "Neutral": "#d97706",
-  "Greed": "#10b981",
-  "Extreme Greed": "#059669",
-};
-
 export default function Home() {
-  const [fgData, setFgData] = useState(null);
-  const [market, setMarket] = useState("US");
-  const [cache, setCache] = useState({});
-
-  const fetchFGIndex = async (selectedMarket) => {
-    if (cache[selectedMarket]) {
-      setFgData(cache[selectedMarket]);
-      return;
-    }
-    try {
-      const res = await fetch(`http://localhost:8000/api/fear_greed?market=${selectedMarket}`);
-      const json = await res.json();
-      setFgData(json);
-      setCache((prev) => ({ ...prev, [selectedMarket]: json }));
-    } catch (err) {
-      console.error("Failed to fetch FG index", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchFGIndex(market);
-  }, [market]);
 
   return (
     <div style={{ backgroundColor: "#020d3b" }} className="flex flex-col gap-0 px-4 py-1">

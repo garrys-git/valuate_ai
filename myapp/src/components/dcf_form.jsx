@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BrainCircuit, ChartPie, Layers, KeyRound, Info, TrendingUp, PercentCircle, DollarSign, BarChart3 } from "lucide-react";
 import ChartContainer from "../components/dcf_charts_container";
 import { useAuth } from "../components/auth_context";
+import { Atom } from "react-loading-indicators";
 
 export default function DcfCalculatorPage() {
   const { auth } = useAuth();
@@ -21,6 +22,7 @@ export default function DcfCalculatorPage() {
 
   const [submitted, setSubmitted] = useState(false);
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -29,32 +31,33 @@ export default function DcfCalculatorPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
-  
+    setLoading(true);  // Start loading
+    
     try {
+      console.log("Calling /api/dcf");
       const response = await fetch("http://localhost:8000/api/dcf/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            premium: formData.isPremium,
-            useML: formData.useML,
-            scenario: formData.scenario,
-            growthRate: formData.growthRate,
-            discountRate: formData.discountRate,
-            perpetualGrowth: formData.perpetualGrowth,
-            market: formData.market,
-            ticker: formData.ticker,
-            advancedCharts: formData.advancedCharts,
+          premium: formData.isPremium,
+          useML: formData.useML,
+          scenario: formData.scenario,
+          growthRate: formData.growthRate,
+          discountRate: formData.discountRate,
+          perpetualGrowth: formData.perpetualGrowth,
+          market: formData.market,
+          ticker: formData.ticker,
+          advancedCharts: formData.advancedCharts,
         }),
       });
   
       const data = await response.json();
-
       setResult({
-          ticker: formData.ticker,
-          ...data.report,
-      });      
+        ticker: formData.ticker,
+        ...data.report,
+      });
     } catch (error) {
       console.error("Error fetching DCF report:", error);
       setResult({
@@ -62,8 +65,10 @@ export default function DcfCalculatorPage() {
         value: "N/A",
         status: "Error fetching data",
       });
+    } finally {
+      setLoading(false);  // Stop loading
     }
-  };  
+  };    
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-200 to-slate-500 px-8 py-4">
@@ -296,8 +301,15 @@ export default function DcfCalculatorPage() {
         </div>
 
         {/* Result Panel */}
+        {loading && (
+          <div className="flex justify-center items-center">
+            <Atom color="#080e71" size="small" textColor="" /><br></br>
+            <p style={ {textColor: "3431cc"} }>Loading your report...</p>
+          </div>
+        )}
+
         <AnimatePresence>
-        {submitted && result && (
+        {submitted && !loading && result && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

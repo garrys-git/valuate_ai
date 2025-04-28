@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { Atom } from "react-loading-indicators";
 
 const COLORS = ["#133dea", "#6680eb", "#afbbee"];
 const LEVEL_COLORS = {
@@ -73,7 +74,7 @@ export default function FearGreedIndex() {
     const cached = localStorage.getItem(cacheKey);
   
     if (cached) {
-      console.log("Using cached data:", cached);
+      console.log("Using cached F&G data:", cached);
       const parsed = JSON.parse(cached);
       const isToday = parsed.date === new Date().toISOString().slice(0, 10);
   
@@ -85,7 +86,7 @@ export default function FearGreedIndex() {
     }
   
     try {
-      console.log("Fetching new data...");
+      console.log("Fetching new F&G data...");
       const res = await fetch(`http://localhost:8000/api/fear_greed?market=${market}`);
       const json = await res.json();
   
@@ -100,7 +101,7 @@ export default function FearGreedIndex() {
   
       setData(json);
     } catch (err) {
-      console.error("Failed to fetch index:", err);
+      console.error("Failed to fetch F&G index:", err);
     } finally {
       setLoading(false);
     }
@@ -114,7 +115,14 @@ export default function FearGreedIndex() {
     setMarket((prev) => (prev === "US" ? "INDIA" : "US"));
   };
 
-  if (loading || !data) return <div className="text-center text-slate-200 py-10">Loading data...</div>;
+  if (loading || !data) 
+    return (
+      <div className="flex justify-center items-center">
+        <Atom color="#080e71" size="small" textColor="" /><br></br>
+        <p style={ {textColor: "3431cc"} }>Loading Fear & Greed Index...</p>
+      </div>
+    );
+    
 
   return (
     <div className="py-6 px-6 flex flex-col items-center gap-8">

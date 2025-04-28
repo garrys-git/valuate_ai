@@ -18,7 +18,7 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    
     const res = await fetch("http://localhost:8000/api/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -27,10 +27,12 @@ export default function Login() {
 
     if (res.ok) {
       const data = await res.json();
+      console.log("Logging in.")
       login(data.access_token); // stores the token in context/localStorage
       navigate("/");
     } else {
       const err = await res.json();
+      console.error("Login failed: ", err);
       alert(`Login failed: ${err.detail || "Unknown error"}`);
     }
   };

@@ -20,14 +20,14 @@ export default function BuyPremium() {
   }, [isPremium, navigate]);
 
   const handleBuyPremium = async () => {
-    console.log("buying premium: ", token);
+    console.log("Buying premium.");
     const res = await fetch("http://localhost:8000/api/payment/create_order", {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });
 
     const data = await res.json();
-    console.log("razorpay data: ", data);
+    console.log("Received razorpay data.");
 
     const options = {
       key: data.razorpay_key,
@@ -51,11 +51,13 @@ export default function BuyPremium() {
         });
 
         if (verifyRes.ok) {
+          console.log("Payment verified.");
           login(token, true);
           alert("🎉 Premium Unlocked!");
           window.location.reload(); // or navigate('/')
         } else {
-          alert("Payment verification failed!");
+          console.log("Payment verification failed.");
+          alert("Payment verification failed! If any amount was debited, please reach out to us on our email.");
         }
       },
       theme: { color: "#3399cc" },

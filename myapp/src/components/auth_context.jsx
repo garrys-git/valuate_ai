@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -39,18 +39,33 @@ export function useAuthFetch() {
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({ token: null, isPremium: false });
   const [authLoading, setAuthLoading] = useState(true);
+  const logoutCalled = useRef(false);
+
+  const safeLogout = () => {
+    if (!logoutCalled.current) {
+      logoutCalled.current = true;
+      console.log("Logging out.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("isPremium");
+      setAuth({ token: null, isPremium: false });
+    }
+  };
 
   const fetchUserInfo = async (token) => {
     try {
+      console.log("Fetching user info.")
       const res = await fetch("http://localhost:8000/api/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
   
-      if (res.status === 403) {
-        console.warn("Unauthorized or expired token, logging out...");
-        alert("Session expired. Please login again.");
-        logout(); // <== THIS will internally call setAuth properly
-        return;
+      if (!res.ok) {
+        if (res.status === 403) {
+          console.warn("Unauthorized or expired token, logging out...");
+          alert("Session expired. Please login again.");
+          safeLogout();
+          return;
+        }
+        throw new Error(`HTTP error! Status: ${res.status}`);
       }
   
       const data = await res.json();
@@ -59,8 +74,8 @@ export const AuthProvider = ({ children }) => {
       setAuth({ token, isPremium });
     } catch (err) {
       console.error("Failed to fetch user info", err);
-      alert("Something went wrong. Please login again.");
-      logout();
+      alert("Something went wrong. If logged out, please login again.");
+      safeLogout();
     }
   };  
 
@@ -74,6 +89,7 @@ export const AuthProvider = ({ children }) => {
   }, []);  
 
   const login = async (token, skipFetch = false) => {
+    console.log("Logging in.")
     localStorage.setItem("token", token);
     if (skipFetch) {
       const isPremium = true;
@@ -84,14 +100,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isPremium");
-    setAuth({ token: null, isPremium: false });
-  };
+  // const logout = () => {
+  //   console.log("Logging out.")
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("isPremium");
+  //   setAuth({ token: null, isPremium: false });
+  // };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout, authLoading }}>
+    <AuthContext.Provider value={{ auth, login, logout: safeLogout, authLoading }}>
       {children}
     </AuthContext.Provider>
   );

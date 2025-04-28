@@ -96,7 +96,7 @@ export default function Header() {
                     <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Your Profile</li>
                   </a>
                   <a href="/buypremium">
-                    <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer">Buy Premium</li>
+                    <li className="px-4 py-2 hover:bg-slate-100 cursor-pointer text-amber-500">Buy Premium</li>
                   </a>
                   <li
                     onClick={handleLogout}

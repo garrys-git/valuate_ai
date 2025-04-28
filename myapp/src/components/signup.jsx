@@ -27,6 +27,7 @@ export default function Signup() {
     // Simple email regex validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.username)) {
+      console.log("Invalid email address.");
       setEmailError("Please enter a valid email address.");
       return;
     }
@@ -38,6 +39,7 @@ export default function Signup() {
     });
 
     if (res.ok) {
+      console.log("Signup successfull. Trying to auto-login.");
       const loginRes = await fetch("http://localhost:8000/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -48,15 +50,18 @@ export default function Signup() {
       });
 
       if (loginRes.ok) {
+        console.log("Auto-login successfull. Redirecting to home...");
         const data = await loginRes.json();
         login(data.access_token);
         navigate("/");
       } else {
+        console.log("Signup succeeded, but auto-login failed.");
         alert("Signup succeeded, but auto-login failed. Please log in manually.");
         navigate("/login");
       }
     } else {
       const err = await res.json();
+      console.error("Signup failed: ", err);
       alert(`Signup failed: ${err.detail || "Unknown error"}`);
     }
   };

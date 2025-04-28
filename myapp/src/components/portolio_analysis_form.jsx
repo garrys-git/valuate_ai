@@ -8,6 +8,7 @@ import CorrelationHeatmap from "./CorrelationHeatmap";
 import CumulativeReturnsChart from "./CumulativeReturnsChart";
 import { useAuth } from "../components/auth_context";
 import PnLBarChart from "./PnLBarChart";
+import { Atom } from "react-loading-indicators";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -16,6 +17,7 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
   const [market, setMarket] = useState("India");
   const [isPremium, setIsPremium] = useState(false);
   const [useManualEntry, setUseManualEntry] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [manualEntries, setManualEntries] = useState([
     { ticker: "", quantity: "", avgPrice: "", ltp: "" },
   ]);
@@ -39,11 +41,13 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     await onSubmit(
       useManualEntry
         ? { market, isPremium, useManualEntry, entries: manualEntries }
         : { market, isPremium, useManualEntry, csvFile }
     );
+    setLoading(false);
   };
   
 
@@ -180,7 +184,7 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
                     We support various formats. If there is any failure to generate your report then it is recommended to upload a file with Zerodha's portfolio report format, i.e. with columns as follows; Instrument, Qty., Avg. cost, LTP (Optional).
                   </div>
                 </div>
-                Upload CSV
+                Upload CSV / Excel
             </label>
               <input
                 type="file"
@@ -211,7 +215,13 @@ export default function PortfolioAnalysisForm({ onSubmit, result }) {
       </div>
 
       {/* Display Results */}
-      {result && (
+      {loading && (
+          <div className="flex justify-center items-center">
+            <Atom color="#080e71" size="small" textColor="" /><br></br>
+            <p style={ {textColor: "3431cc"} }>Loading your report...</p>
+          </div>
+      )}
+      {!loading && result && (
         <div className="bg-white shadow-lg p-8 rounded-2xl space-y-8">
 
           {/* Portfolio Analysis Header */}
